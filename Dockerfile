@@ -1,5 +1,5 @@
-# Creates a kylin 1.5.2 + HDP 2.4 + Centos7 image
 
+# Creates a kylin 1.6.0 + HDP 2.4 + Centos7 image
 FROM centos:7
 MAINTAINER Kyligence Inc
 
@@ -36,10 +36,17 @@ ENV JAVA_HOME /usr/java/default
 ENV PATH $PATH:$JAVA_HOME/bin
 RUN rm /usr/bin/java && ln -s $JAVA_HOME/bin/java /usr/bin/java
 
-# kylin 1.5.2
-RUN curl -s https://www-us.apache.org/dist/kylin/apache-kylin-1.5.2.1/apache-kylin-1.5.2.1-HBase1.x-bin.tar.gz | tar -xz -C /usr/local/
-RUN cd /usr/local && ln -s ./apache-kylin-1.5.2.1-bin kylin
+# kylin 1.6.0
+RUN sudo yum install wget -y
+RUN wget http://www.apache.org/dyn/closer.cgi/kylin/apache-kylin-1.6.0/apache-kylin-1.6.0-hbase1.x-bin.tar.gz
+RUN tar -xf apache-kylin-1.6.0-hbase1.x-bin.tar.gz
+RUN mv apache-kylin-1.6.0-hbase1.x-bin /usr/local
+RUN cd /usr/local && ln -s ./apache-kylin-1.6.0-hbase1.x-bin kylin
 ENV KYLIN_HOME /usr/local/kylin
+
+# fixing the libhadoop.so like a boss
+RUN mkdir -p /usr/local/hadoop/lib/native/
+RUN curl -Ls http://dl.bintray.com/sequenceiq/sequenceiq-bin/hadoop-native-64-2.6.0.tar | tar -x -C /usr/local/hadoop/lib/native/
 
 ADD ssh_config /root/.ssh/config
 RUN chmod 600 /root/.ssh/config && chown root:root /root/.ssh/config
@@ -56,7 +63,7 @@ RUN echo "Port 2122" >> /etc/ssh/sshd_config
 
 CMD ["/etc/bootstrap.sh", "-d"]
 
-ENV JAVA_LIBRARY_PATH /usr/hdp/2.4.0.0-169/hadoop/lib/native:$JAVA_LIBRARY_PATH
+ENV JAVA_LIBRARY_PATH /usr/hdp/2.4.2.0-258/hadoop/lib/native:/usr/local/hadoop/lib/native:$JAVA_LIBRARY_PATH
 
 # Kylin and Other ports
 EXPOSE 7070 7443 49707 2122
