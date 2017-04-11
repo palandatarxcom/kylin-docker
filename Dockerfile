@@ -36,12 +36,12 @@ ENV JAVA_HOME /usr/java/default
 ENV PATH $PATH:$JAVA_HOME/bin
 RUN rm /usr/bin/java && ln -s $JAVA_HOME/bin/java /usr/bin/java
 
-# kylin 1.5.2
+# kylin 1.6.0
 RUN sudo yum install wget -y
-RUN wget https://archive.apache.org/dist/kylin/apache-kylin-1.5.2.1/apache-kylin-1.5.2.1-bin.tar.gz 
-RUN tar -xf apache-kylin-1.5.2.1-bin.tar.gz
-RUN mv apache-kylin-1.5.2.1-bin /usr/local
-RUN cd /usr/local && ln -s ./apache-kylin-1.5.2.1-bin kylin
+RUN wget http://www.apache.org/dyn/closer.cgi/kylin/apache-kylin-1.6.0/apache-kylin-1.6.0-hbase1.x-bin.tar.gz
+RUN tar -xf apache-kylin-1.6.0-hbase1.x-bin.tar.gz
+RUN mv apache-kylin-1.6.0-hbase1.x-bin /usr/local
+RUN cd /usr/local && ln -s ./apache-kylin-1.6.0-hbase1.x-bin kylin
 ENV KYLIN_HOME /usr/local/kylin
 
 # fixing the libhadoop.so like a boss
@@ -63,7 +63,7 @@ RUN echo "Port 2122" >> /etc/ssh/sshd_config
 
 CMD ["/etc/bootstrap.sh", "-d"]
 
-ENV JAVA_LIBRARY_PATH /usr/hdp/2.2.9.0-3393/hadoop/lib/native:/usr/local/hadoop/lib/native:$JAVA_LIBRARY_PATH
+ENV JAVA_LIBRARY_PATH /usr/hdp/2.4.2.0-258/hadoop/lib/native:/usr/local/hadoop/lib/native:$JAVA_LIBRARY_PATH
 
 # Kylin and Other ports
 EXPOSE 7070 7443 49707 2122
