@@ -81,4 +81,5 @@ ADD conf/hbase-site.xml $HBASE_CONF_DIR/hbase-site.xml
 ADD conf/hdfs-site.xml $HBASE_CONF_DIR/hdfs-site.xml
 ADD conf/hive-site.xml $HIVE_CONF_DIR/hive-site.xml
 ADD conf/mapred-site.xml $HIVE_CONF_DIR/mapred-site.xml
+ADD conf/tez-site.xml /etc/tez/conf/tez-site.xml
 ADD conf/kylin.properties $KYLIN_HOME/conf/kylin.properties
