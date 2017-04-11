@@ -8,7 +8,7 @@ USER root
 ADD HDP.repo /etc/yum.repos.d/HDP.repo
 ADD HDP-UTILS.repo /etc/yum.repos.d/HDP-UTILS.repo
 
-RUN rpm -iUvh http://dl.fedoraproject.org/pub/epel/7/x86_64/e/epel-release-7-7.noarch.rpm
+RUN rpm -iUvh http://dl.fedoraproject.org/pub/epel/7/x86_64/e/epel-release-7-9.noarch.rpm
 # install dev tools
 RUN yum clean all; \
     rpm --rebuilddb; \
@@ -38,7 +38,7 @@ RUN rm /usr/bin/java && ln -s $JAVA_HOME/bin/java /usr/bin/java
 
 # kylin 1.6.0
 RUN sudo yum install wget -y
-RUN wget http://www.apache.org/dyn/closer.cgi/kylin/apache-kylin-1.6.0/apache-kylin-1.6.0-hbase1.x-bin.tar.gz
+RUN wget http://apache.01link.hk/kylin/apache-kylin-1.6.0/apache-kylin-1.6.0-hbase1.x-bin.tar.gz 
 RUN tar -xf apache-kylin-1.6.0-hbase1.x-bin.tar.gz
 RUN mv apache-kylin-1.6.0-hbase1.x-bin /usr/local
 RUN cd /usr/local && ln -s ./apache-kylin-1.6.0-hbase1.x-bin kylin
