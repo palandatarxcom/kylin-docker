@@ -1,0 +1,10 @@
+version: '2'
+services:
+  kylin-app:
+    image: datarx/kylin:160
+    extra_hosts:
+      - "slave02:192.168.3.242"
+      - "master01:192.168.3.244"
+      - "slave06:192.168.3.249"
+    ports:
+      - 7070:7070
